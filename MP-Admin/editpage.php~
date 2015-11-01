@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+    <title>Magicpage: Edit Page</title>
+	<link href="admin.css" rel="stylesheet" type="text/css" media="screen" /> 
+  <script type="text/javascript" src="editor.js"></script>
+</head>
+<body>
+<h1 class="titlebar">OP-EZY Magicpage Admin</h1>
+<div id="menu"> 
+<h2>Menu</h2> 
+<ul>
+<li><a href="/">Main Site</a></li>
+<li><a href="/MP-Admin/">Admin Page</a></li>
+</ul>
+</div> 
+
+<div id="content"> 
+
+  <h1>Edit Page</h1>
+
+    <form method="post" onsubmit="editor1.prepareSubmit();" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
+     <script type="text/javascript">
+      var editor1 = new WYSIWYG_Editor('editor1');
+      editor1.display();
+     </script>
+     <noscript>
+      <p style="notSupported">
+       Your browser does not support Javascript with your current setings. I am unable to display the editor to you. Check your settings
+       and enable Javascript, or use one of the supported web browsers (listed in the right column) to view this page for a demonstration.
+      </p>
+     </noscript>
+     <input type="submit" value="Submit" name="update" /><br /><br />
+    </form>
+</div>
+</body>
+</html>

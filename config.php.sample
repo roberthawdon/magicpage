@@ -1,0 +1,18 @@
+<?php
+
+/** Database Config */
+
+$dbhost = ""; # The hostname or IP of your database server
+$dbuser = ""; # The user of your database
+$dbpassword = ""; # The password for your database user
+$dbdatabase = ""; # The database MagicPage will use
+$dbprefix = "MP_"; # A prefix for your tables (not fully implemented)
+
+/** Folder Config */
+
+$pathfolder = ""; # The directory path for MagicPage
+$themes = "MP-Themes"; # Themes directory
+$common = "MP-Common"; # Common directory
+
+
+?>

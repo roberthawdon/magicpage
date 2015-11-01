@@ -1,0 +1,139 @@
+/*******************************************************
+TITLE: Fixed One-Column Layout (Basic) V1.1
+DATE: 20070824
+AUTHOR: The CSS Tinderbox - http://www.csstinderbox.com
+*******************************************************/
+
+body {
+margin:.5em;
+padding:0;
+height:100%;
+background-color:#EEEEFF;
+color:#000000;  
+text-align:center;
+font-family:Arial, Helvetica, sans-serif;
+font-size:16px;
+}
+
+a {
+color:#cc0000;
+text-decoration:underline;
+}
+
+a:hover {
+color:#cccccc;
+text-decoration:none;
+}
+
+p {
+margin:6px 0;
+}
+
+blockquote {
+margin:16px;
+padding:8px;
+background-color:#eeeeee;
+border-top:1px solid #cccccc;
+border-bottom:1px solid #cccccc;
+}
+
+blockquote p {
+margin:.2em;
+}
+
+ul {
+list-style-type:disc;
+}
+
+li {
+margin:0 0 0 25px;
+list-style-type:disc;
+}
+
+#centerColumn { 	
+margin:0 auto;
+padding:1em;
+width:600px;
+text-align:left;
+vertical-align: middle;	
+background-color:#ffffff;
+border:1px solid #cccccc;
+}
+
+#centerColumn h2 {
+margin:0 0 0 0;
+padding:6px 0;
+font-size:1.2em;
+}
+
+#header {
+margin:0 0 0 0;
+padding:0 0 0 0;
+height:160px;
+background:#AAAAFF url('../img/header.png') repeat-x;
+border:1px solid #cccccc;
+}
+
+#header h1 {
+margin:0 0 -8px 0;
+padding:16px 0 0 24px;
+font-size:1.7em;
+}
+
+#header h2 {
+margin:0 0 0 0;
+padding:16px 0 0 24px;
+font-size:.9em;
+font-weight:lighter;
+}
+
+#fauxRightColumn {
+position:relative;
+float:right;
+margin:.5em 0 0 .5em;
+padding:0 .7em .25em .7em;
+width:11em;
+font-size:.9em;
+background-color:#ffffff;
+border:1px solid #cccccc;
+}
+
+#fauxRightColumn h2 {
+font-size:.9em;
+}
+
+#nav ul {
+margin:0;
+list-style:none;
+}
+
+#nav ul.sub {
+margin:0;
+list-style:none;
+}
+
+#nav li {
+margin:0 0 8px 0;
+list-style:none;
+}
+
+#nav li a {
+text-decoration:underline;
+}
+
+#nav li a:hover{
+text-decoration:none;
+}
+
+#footer {
+position:relative;
+bottom:0;
+margin:80px 0 0 0;
+padding:0;
+height:64px;
+line-height:64px;
+text-align:center;
+font-size:.7em;
+background-color:#ffffff;
+border-top:1px solid #cccccc;
+}

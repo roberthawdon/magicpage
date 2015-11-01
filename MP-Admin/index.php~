@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+
+<?php
+
+/** Load the config file **/
+
+include("../config.php"); 
+
+/** Connect to Database */
+
+include("" . $pathfolder . "" . $common . "/dbconnect.php");
+
+/** Global Config */
+
+include("" . $pathfolder . "" . $common . "/dbfetchconfig.php");
+
+/** Load Module Loader **/
+
+include("ADM_Modules/module_loader.php");
+
+/** Get Arguments from URL **/
+
+$action = $_GET['action'];
+
+
+?>
+
+    <title>Magicpage: Admin Panel</title>
+	<link href="MP_Admin/admin.css" rel="stylesheet" type="text/css" media="screen" /> 
+  <script type="text/javascript" src="editor.js"></script>
+</head>
+<body>
+<h1 class="titlebar">OP-EZY Magicpage Admin</h1>
+<div id="menu"> 
+<h2>Admin Menu</h2> 
+<!-- Navigation Menu To Go Here -->
+
+<ul>
+<li><a href="/">Main Site</a></li>
+<li><a href="/MP-Admin/">Admin Page</a></li>
+</ul>
+
+
+</div> 
+
+<div id="content"> 
+
+<?php echo mpadmin($action); 
+
+include("" . $pathfolder . "" . $common . "/dbdisconnect.php");
+
+?>
+
+</div>
+</body>
+</html>
