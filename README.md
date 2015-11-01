@@ -1,0 +1,2 @@
+# magicpage
+A simple CMS
