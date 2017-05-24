@@ -1,35 +1,38 @@
 <?php
 
 /**
- * OP-EZY MagicPage Common Database Config Fetch, Version 0.1.0
+ * OP-EZY MagicPage Common Database Config Fetch, Version 0.2.0
  * This module loads the configuration arguments from the Database
  */ 
 
-mysql_select_db($dbdatabase , $con);
+$query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='siteurl'";
+
+$result = $con->query($query);
 
 
-$result = mysql_query("SELECT * FROM " . $dbprefix . "shared WHERE mpoption='siteurl'");
-
-
-while($row = mysql_fetch_array($result))
+while($row = $result->fetch(PDO::FETCH_ASSOC))
   {
-  $path = "" . $row['value'] . "";
+  $path = $row['value'];
   }
 
-$result = mysql_query("SELECT * FROM " . $dbprefix . "shared WHERE mpoption='theme'");
+$query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='theme'";
+
+$result = $con->query($query);
 
 
-while($row = mysql_fetch_array($result))
+while($row = $result->fetch(PDO::FETCH_ASSOC))
   {
-  $MPTheme = "" . $row['value'] . "";
+  $MPTheme = $row['value'];
   }
 
-$result = mysql_query("SELECT * FROM " . $dbprefix . "shared WHERE mpoption='defaultpage'");
+$query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='defaultpage'";
+
+$result = $con->query($query);
 
 
-while($row = mysql_fetch_array($result))
+while($row = $result->fetch(PDO::FETCH_ASSOC))
   {
-  $HomepageID = "" . $row['value'] . "";
+  $HomepageID = $row['value'];
   }
 
 ?>

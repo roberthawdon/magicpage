@@ -1,10 +1,11 @@
 <?php
 
 /**
- * OP-EZY MagicPage Common MySQL Database Disconnection Module, Version 0.0.1
+ * OP-EZY MagicPage Common MySQL Database Disconnection Module, Version 0.1.0
  */
 
-mysql_close($con);
+$result->closeCursor();
 
+$con = null;
 
 ?>

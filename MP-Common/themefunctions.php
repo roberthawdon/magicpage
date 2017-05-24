@@ -21,12 +21,11 @@ global $viewpage;
 
       if ($themearg == "keywords") {
 
-mysql_select_db($dbdatabase , $con);
 
-$result = mysql_query("SELECT * FROM " . $dbprefix . "shared WHERE mpoption='site_metatags'");
+$query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='site_metatags'";
+$result = $con->query($query);
 
-
-while($row = mysql_fetch_array($result))
+while($row = $result->fetch(PDO::FETCH_ASSOC))
   {
   echo "" . $row['value'] . "";
   }
@@ -35,12 +34,12 @@ while($row = mysql_fetch_array($result))
 
       elseif ($themearg == "sitename") {
 
-mysql_select_db($dbdatabase , $con);
 
-$result = mysql_query("SELECT * FROM " . $dbprefix . "shared WHERE mpoption='sitename'");
+$query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='sitename'";
+$result = $con->query($query);
 
 
-while($row = mysql_fetch_array($result))
+while($row = $result->fetch(PDO::FETCH_ASSOC))
   {
   echo "" . $row['value'] . "";
   }
@@ -49,12 +48,12 @@ while($row = mysql_fetch_array($result))
 
       elseif ($themearg == "sitetagline") {
 
-mysql_select_db($dbdatabase , $con);
 
-$result = mysql_query("SELECT * FROM " . $dbprefix . "shared WHERE mpoption='sitetagline'");
+$query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='sitetagline'";
+$result = $con->query($query);
 
 
-while($row = mysql_fetch_array($result))
+while($row = $result->fetch(PDO::FETCH_ASSOC))
   {
   echo "" . $row['value'] . "";
   }
@@ -63,12 +62,12 @@ while($row = mysql_fetch_array($result))
 
       elseif ($themearg == "orgname") {
 
-mysql_select_db($dbdatabase , $con);
 
-$result = mysql_query("SELECT * FROM " . $dbprefix . "shared WHERE mpoption='orgname'");
+$query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='orgname'";
+$result = $con->query($query);
 
 
-while($row = mysql_fetch_array($result))
+while($row = $result->fetch(PDO::FETCH_ASSOC))
   {
   echo "" . $row['value'] . "";
   }
@@ -77,12 +76,12 @@ while($row = mysql_fetch_array($result))
 
       elseif ($themearg == "description") {
 
-mysql_select_db($dbdatabase , $con);
 
-$result = mysql_query("SELECT * FROM " . $dbprefix . "shared WHERE mpoption='site_description'");
+$query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='site_description'";
+$result = $con->query($query);
 
 
-while($row = mysql_fetch_array($result))
+while($row = $result->fetch(PDO::FETCH_ASSOC))
   {
   echo "" . $row['value'] . "";
   }
@@ -91,12 +90,12 @@ while($row = mysql_fetch_array($result))
 
       elseif ($themearg == "title") {
 
-mysql_select_db($dbdatabase , $con);
 
-$result = mysql_query("SELECT * FROM " . $dbprefix . "pages WHERE urlfolder='" . $viewpage . "'");
+$query = "SELECT * FROM " . $dbprefix . "pages WHERE urlfolder='" . $viewpage . "'";
+$result = $con->query($query);
 
 
-while($row = mysql_fetch_array($result))
+while($row = $result->fetch(PDO::FETCH_ASSOC))
   {
   echo "" . $row['title'] . "";
   }
@@ -105,12 +104,12 @@ while($row = mysql_fetch_array($result))
 
     elseif ($themearg == "content") {
 
-mysql_select_db($dbdatabase , $con);
 
-$result = mysql_query("SELECT * FROM " . $dbprefix . "pages WHERE urlfolder='" . $viewpage . "'");
+$query = "SELECT * FROM " . $dbprefix . "pages WHERE urlfolder='" . $viewpage . "'";
+$result = $con->query($query);
 
 
-while($row = mysql_fetch_array($result))
+while($row = $result->fetch(PDO::FETCH_ASSOC))
   {
   echo "" . $row['content'] . "";
   }
@@ -119,12 +118,12 @@ while($row = mysql_fetch_array($result))
 
     elseif ($themearg == "sideboard") {
 
-mysql_select_db($dbdatabase , $con);
 
-$result = mysql_query("SELECT * FROM " . $dbprefix . "shared WHERE mpoption='sideboard'");
+$query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='sideboard'";
+$result = $con->query($query);
 
 
-while($row = mysql_fetch_array($result))
+while($row = $result->fetch(PDO::FETCH_ASSOC))
   {
   echo "" . $row['value'] . "";
   }
@@ -133,12 +132,12 @@ while($row = mysql_fetch_array($result))
 
     elseif ($themearg == "preheader") {
 
-mysql_select_db($dbdatabase , $con);
 
-$result = mysql_query("SELECT * FROM " . $dbprefix . "pages WHERE urlfolder='" . $viewpage . "'");
+$query = "SELECT * FROM " . $dbprefix . "pages WHERE urlfolder='" . $viewpage . "'";
+$result = $con->query($query);
 
 
-while($row = mysql_fetch_array($result))
+while($row = $result->fetch(PDO::FETCH_ASSOC))
   {
   eval ("" . $row['preheader'] . "");
   }
@@ -147,12 +146,12 @@ while($row = mysql_fetch_array($result))
 
     elseif ($themearg == "extraheader") {
 
-mysql_select_db($dbdatabase , $con);
 
-$result = mysql_query("SELECT * FROM " . $dbprefix . "pages WHERE urlfolder='" . $viewpage . "'");
+$query = "SELECT * FROM " . $dbprefix . "pages WHERE urlfolder='" . $viewpage . "'";
+$result = $con->query($query);
 
 
-while($row = mysql_fetch_array($result))
+while($row = $result->fetch(PDO::FETCH_ASSOC))
   {
   echo "" . $row['extraheader'] . "";
   }
@@ -161,12 +160,12 @@ while($row = mysql_fetch_array($result))
 
     elseif ($themearg == "extrabodyoption") {
 
-mysql_select_db($dbdatabase , $con);
 
-$result = mysql_query("SELECT * FROM " . $dbprefix . "pages WHERE urlfolder='" . $viewpage . "'");
+$query = "SELECT * FROM " . $dbprefix . "pages WHERE urlfolder='" . $viewpage . "'";
+$result = $con->query($query);
 
 
-while($row = mysql_fetch_array($result))
+while($row = $result->fetch(PDO::FETCH_ASSOC))
   {
   echo " " . $row['extrabodyoption'] . ""; #Make note of the extra space
   }
