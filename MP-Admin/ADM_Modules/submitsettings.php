@@ -1,12 +1,10 @@
 <?php
 
 /** 
- * OP-EZY MagicPage Submit Settings Page, Version 0.0.3
+ * OP-EZY MagicPage Submit Settings Page, Version 0.1.0
  * Inserts/edits or deletes data from editor 
  * into database.
  */
-
-mysql_select_db($dbdatabase , $con);
 
 $commonpagetext = htmlentities($_POST['elm1']);
 $commonpagetext = html_entity_decode($commonpagetext, ENT_QUOTES);
@@ -27,7 +25,7 @@ $maintenance = "0";
 }
 
 
-mysql_query("UPDATE " . $dbprefix . "shared SET value=
+$query = "UPDATE " . $dbprefix . "shared SET value=
 CASE 
     WHEN mpoption='sitename' 
         THEN '" . $sitename . "'
@@ -53,8 +51,9 @@ CASE
         THEN '" . $maintenancepass . "'
 END
 WHERE 
-    `value` IS NOT NULL") or die('Query failed: ' . mysql_error());
+    `value` IS NOT NULL";
 
+$con->query($query);
 
 ?>
 

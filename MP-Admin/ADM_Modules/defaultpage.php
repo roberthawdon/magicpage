@@ -2,19 +2,16 @@
 
 global $loggedinuser;
 
-mysql_select_db($dbdatabase , $con);
+$query = "SELECT first_name, middle_names, last_name, user_login, user_pass, user_email, user_registered FROM " . $dbprefix . "users WHERE user_login='" . $loggedinuser . "'";
 
-$sql = "SELECT first_name, middle_names, last_name, user_login, user_pass, user_email, user_registered FROM " . $dbprefix . "users WHERE user_login='" . $loggedinuser . "'";
-
-$items = mysql_query($sql) or die(mysql_error());
-
-while ($fetch = mysql_fetch_array($items)) {
-$firstname = $fetch['first_name'];
-$middlenames = $fetch['middle_names'];
-$lastname = $fetch['last_name'];
-$email = $fetch['user_email'];
-$admin = $fetch['admin'];
-$regdate = $fetch['user_registered'];
+$result = $con->query($query);
+while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+$firstname = $row['first_name'];
+$middlenames = $row['middle_names'];
+$lastname = $row['last_name'];
+$email = $row['user_email'];
+$admin = $row['admin'];
+$regdate = $row['user_registered'];
 }
 
 ?>

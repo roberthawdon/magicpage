@@ -6,12 +6,10 @@
 </tr>
 <?php 
 
-mysql_select_db($dbdatabase , $con);
+$query = "SELECT ID, first_name, middle_names, last_name, user_login, user_email, admin, user_registered FROM " . $dbprefix . "users ORDER BY ID ASC"; 
+$result = $con->query($query);
 
-$sql = "SELECT ID, first_name, middle_names, last_name, user_login, user_email, admin, user_registered FROM " . $dbprefix . "users ORDER BY ID ASC"; 
-$items = mysql_query($sql) or die(mysql_error());
-
-while($row = mysql_fetch_array($items))
+while ($row = $result->fetch(PDO::FETCH_ASSOC))
   {
   echo "<tr>
 	      <td><a href=\"?adm=go&action=edituser&user=" . $row['user_login'] . "\">" . $row['user_login'] . "</a></td>

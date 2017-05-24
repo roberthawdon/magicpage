@@ -29,7 +29,7 @@ include("" . $common . "/dbconnect.php");
 
 include("" . $common . "/dbfetchconfig.php");
 
-$mpversion = "0.2.0-Beta4";
+$mpversion = "0.3.0-Development-PHP7";
 
 /** Load common theme functions */
 
@@ -37,14 +37,16 @@ include("" . $common . "/themefunctions.php");
 
 /** Check for maintenance mode and override password **/
 
-$maintenance = mysql_query("SELECT value FROM " . $dbprefix . "shared WHERE mpoption='maintenance'");
-while ($fetch = mysql_fetch_array($maintenance)) {
-$maintenance = $fetch['value'];
+$query = "SELECT value FROM " . $dbprefix . "shared WHERE mpoption='maintenance'";
+$result = $con->query($query);
+while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+$maintenance = $row['value'];
 }
 
-$mmoverridepass = mysql_query("SELECT value FROM " . $dbprefix . "shared WHERE mpoption='mmoverride'");
-while ($fetch = mysql_fetch_array($mmoverridepass)) {
-$mmoverridepass = $fetch['value'];
+$query = "SELECT value FROM " . $dbprefix . "shared WHERE mpoption='mmoverride'";
+$result = $con->query($query);
+while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+$mmoverridepass = $row['value'];
 }
 
 $mmoverride = $_GET['mmoverride'];

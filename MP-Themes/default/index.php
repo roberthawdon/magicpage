@@ -31,7 +31,7 @@
 	<div id="footer">
 	<a href="http://validator.w3.org/check?uri=referer" title="W3C XHTML Validation"><img src="<?php print $path. "/" .$themes. "/" .$MPTheme ?>/img/xhtml10.gif" alt="Valid XHTML 1.0" /></a> | 
 	<a href="http://jigsaw.w3.org/css-validator/check/referer" title="W3C CSS Validation"><img src="<?php print $path. "/" .$themes. "/" .$MPTheme ?>/img/css.gif" alt="Valid CSS" /></a> | 
-	<a href="http://www.op-ezy.co.uk/MagicPage" title="OP-EZY Magicpage"><img src="<?php print $path. "/" .$themes. "/" .$MPTheme ?>/img/magicpage.png" alt="MagicPage" /></a>
+	<a href="https://github.com/roberthawdon/magicpage" title="Magicpage"><img src="<?php print $path. "/" .$themes. "/" .$MPTheme ?>/img/magicpage.png" srcset="<?php print $path. "/" .$themes. "/" .$MPTheme ?>/img/magicpage_2x.png 2x"alt="MagicPage" /></a>
 	<p>&copy; <?php echo date("Y");?> <?php echo mpimport("orgname"); ?></p>
 	</div>
 	<!--//end #footer//-->

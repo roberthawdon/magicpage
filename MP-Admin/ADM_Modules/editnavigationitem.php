@@ -2,18 +2,15 @@
 
 $itemid = $_GET['itemid'];
 
-mysql_select_db($dbdatabase , $con);
-
-$result = mysql_query("SELECT * FROM " . $dbprefix . "navigation WHERE id='" . $itemid . "'");
-$parents = mysql_query("SELECT * FROM " . $dbprefix . "navigation WHERE parent_id='0'");
-$pages = mysql_query("SELECT * FROM " .$dbprefix . "pages");
+$query = "SELECT * FROM " . $dbprefix . "navigation WHERE id='" . $itemid . "'";
+$result = $con->query($query);
 
 if ($itemid == "new") {
 $label = "";
 $linkto = "";
 $childof = "";
 } else {
-while($row = mysql_fetch_array($result)) 
+while ($row = $result->fetch(PDO::FETCH_ASSOC))
 {
 $label = $row['label'];
 $linkto = $row['link_url'];
@@ -28,7 +25,9 @@ $childof = $row['parent_id'];
 Label: <input type="text" value="<?php echo $label;?>" name="label" style="width: 180px;" /><br/>
 Link: <select name="mplink">
 <?php
-while($row = mysql_fetch_array($pages))
+$query = "SELECT * FROM " .$dbprefix . "pages";
+$result = $con->query($query);
+while ($row = $result->fetch(PDO::FETCH_ASSOC))
 {
 if ("/" . $row['urlfolder'] . "/" == $linkto){
 echo "<option value=\"/" . $row['urlfolder'] . "/\" selected>" . $row['title'] . "</option>
@@ -53,7 +52,10 @@ echo "<option value=\"other\">Other</option>
 <input type="text" value="<?php echo $linkbox;?>" name="linkbox" style="width: 180px;" /><br />
 Child of: <select name="parent">
 <option value="0">Is Parent</option>
-<?php while($row = mysql_fetch_array($parents))
+<?php
+$query = "SELECT * FROM " . $dbprefix . "navigation WHERE parent_id='0'";
+$result = $con->query($query);
+while ($row = $result->fetch(PDO::FETCH_ASSOC))
 { 
 if ($row['id'] == $childof){
 echo "<option value=\"" . $row['id'] . "\" selected>" . $row['label'] . "</option>

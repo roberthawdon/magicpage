@@ -1,13 +1,13 @@
 <?php
 
 /**
- * OP-EZY MagicPage Common MySQL Database Connection Module, Version 0.0.1
+ * OP-EZY MagicPage Common MySQL Database Connection Module, Version 0.1.0
  */
 
-$con = mysql_connect($dbhost , $dbuser , $dbpassword);
+$con = new PDO("mysql:host=" . $dbhost . ";dbname=" . $dbdatabase , $dbuser , $dbpassword);
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+      die('Could not connect: ' . $con->errorInfo()[2]);
   }
 
 

@@ -24,7 +24,7 @@ $loggedinuser = $_COOKIE['mpuser'];
 
 </head>
 <body>
-<h1 class="titlebar">OP-EZY Magicpage Admin</h1>
+<h1 class="titlebar">Magicpage Admin</h1>
 <div id="menu"> 
 <h2>Admin Menu</h2> 
 <?php include("ADM_Modules/navigation.php"); ?>
@@ -38,6 +38,6 @@ echo mpadmin('login');
 echo mpadmin($action);}
 ?>
 </div>
-<p align="right">OP-EZY Magicpage Version: <?php echo $mpversion; ?> <a href="http://www.op-ezy.co.uk/MagicPage/"><img src="MP-Admin/images/magicpage.png" alt="Powered by OP-EZY Magicpage" title="Powered by OP-EZY Magicpage"></a></p>
+<p align="right">Magicpage Version: <?php echo $mpversion; ?> <a href="https://github.com/roberthawdon/magicpage"><img src="MP-Admin/images/magicpage.png" srcset="MP-Admin/images/magicpage_2x.png 2x" alt="Powered by Magicpage" title="Powered by Magicpage"></a></p>
 </body>
 </html>

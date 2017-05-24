@@ -13,12 +13,10 @@
 
 <?php 
 
-mysql_select_db($dbdatabase , $con);
+$query = "SELECT id, label, link_url, parent_id FROM " . $dbprefix . "navigation ORDER BY ID ASC"; 
+$result = $con->query($query);
 
-$sql = "SELECT id, label, link_url, parent_id FROM " . $dbprefix . "navigation ORDER BY ID ASC"; 
-$items = mysql_query($sql) or die(mysql_error());
-
-while($row = mysql_fetch_array($items))
+while ($row = $result->fetch(PDO::FETCH_ASSOC))
   {
   echo "<tr>
 	      <td>";
@@ -31,8 +29,9 @@ echo "&nbsp;";
 	      <td>" . $row['label'] . "</td>
 	      <td><a href=\"" . $row['link_url'] . "\" target=\"_blank\">" . $row['link_url'] . "</a></td>
 	      <td>";
-$parents = mysql_query("SELECT label FROM " . $dbprefix . "navigation WHERE ID='" . $row['parent_id'] . "'");
-while($parentname = mysql_fetch_array($parents))
+$query = "SELECT ID, label FROM " . $dbprefix . "navigation WHERE ID='" . $row['parent_id'] . "'";
+$result = $con->query($query);
+while ($parentname = $result->fetch(PDO::FETCH_ASSOC))
 {echo $parentname['label'];}
 echo "</td>
 	      <td><a href=\"/?adm=go&action=navigationitem&itemid=" . $row['id'] . "\">Edit</a></td>

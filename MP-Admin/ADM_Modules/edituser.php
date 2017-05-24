@@ -1,18 +1,18 @@
-<?php mysql_select_db($dbdatabase , $con);
+<?php
 
 $user = $_GET['user'];
 $new = $_GET['new'];
 
-$sql = "SELECT ID, first_name, middle_names, last_name, user_login, user_email, admin, user_registered FROM " . $dbprefix . "users WHERE user_login='" . $user . "' ORDER BY ID ASC"; 
-$items = mysql_query($sql) or die(mysql_error());
+$query = "SELECT ID, first_name, middle_names, last_name, user_login, user_email, admin, user_registered FROM " . $dbprefix . "users WHERE user_login='" . $user . "' ORDER BY ID ASC"; 
+$result = $con->query($query);
 
-while ($fetch = mysql_fetch_array($items)) {
-$firstname = $fetch['first_name'];
-$middlenames = $fetch['middle_names'];
-$lastname = $fetch['last_name'];
-$email = $fetch['user_email'];
-$admin = $fetch['admin'];
-$regdate = $fetch['user_registered'];
+while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+$firstname = $row['first_name'];
+$middlenames = $row['middle_names'];
+$lastname = $row['last_name'];
+$email = $row['user_email'];
+$admin = $row['admin'];
+$regdate = $row['user_registered'];
 }
 
 ?>

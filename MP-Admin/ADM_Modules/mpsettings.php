@@ -1,36 +1,35 @@
 <?php 
 
-mysql_select_db($dbdatabase , $con);
 
-$sitenamelookup = mysql_query("SELECT value FROM " . $dbprefix . "shared WHERE mpoption='sitename'");
-$descriptionlookup = mysql_query("SELECT value FROM " . $dbprefix . "shared WHERE mpoption='site_description'");
-$tagslookup = mysql_query("SELECT value FROM " . $dbprefix . "shared WHERE mpoption='site_metatags'");
-$urllookup = mysql_query("SELECT value FROM " . $dbprefix . "shared WHERE mpoption='siteurl'");
-$sitetaglinelookup = mysql_query("SELECT value FROM " . $dbprefix . "shared WHERE mpoption='sitetagline'");
-$orgname = mysql_query("SELECT value FROM " . $dbprefix . "shared WHERE mpoption='orgname'");
-$maintenance = mysql_query("SELECT value FROM " . $dbprefix . "shared WHERE mpoption='maintenance'");
-while ($fetch = mysql_fetch_array($maintenance)) {
-$maintenance = $fetch['value'];
+function mpfetchshard($mpoption) {
+    global $con;
+    global $dbprefix;
+
+    $query = "SELECT value FROM " . $dbprefix . "shared WHERE mpoption='" . $mpoption . "'";
+
+    $result = $con->query($query);
+
+    while ($row = $result->fetch(PDO::FETCH_ASSOC))
+    {
+        $value = $row['value'];
+    }
+
+    return $value;
 }
-$defaultpagelookup = mysql_query("SELECT value FROM " . $dbprefix . "shared WHERE mpoption='defaultpage'");
-while ($fetch = mysql_fetch_array($defaultpagelookup)) {
-$selectedpage = $fetch['value'];
-}
-$themelookup = mysql_query("SELECT value FROM " . $dbprefix . "shared WHERE mpoption='theme'");
-while ($fetch = mysql_fetch_array($themelookup)) {
-$selectedtheme = $fetch['value'];
-}
-$pages = mysql_query("SELECT * FROM " .$dbprefix . "pages");
-$fetchcommoncode = mysql_query("SELECT value FROM " . $dbprefix . "shared WHERE mpoption='sideboard'");
-while ($fetch = mysql_fetch_array($fetchcommoncode)) {
-$editcommoncode = $fetch['value'];
-}
+
+$maintenance = mpfetchshard('maintenance');
+$selectedpage = mpfetchshard('defaultpage');
+$selectedtheme = mpfetchshard('theme');
+
+$editcommoncode = mpfetchshard('sideboard');
+
 $editcommoncode = addslashes(preg_replace('`[\r\n]`','',$editcommoncode));
 $editcommoncode = stripcslashes($editcommoncode);
 $editcommoncode = htmlentities("" . $editcommoncode . "", ENT_QUOTES);
 
-$maintenancepasslookup = mysql_query("SELECT value FROM " . $dbprefix . "shared WHERE mpoption='mmoverride'");
 
+$query = "SELECT * FROM " .$dbprefix . "pages";
+$pages = $con->query($query);
 ?>
 
 <script type="text/javascript" src="MP-Admin/tiny_mce.js"></script>
@@ -135,44 +134,32 @@ $maintenancepasslookup = mysql_query("SELECT value FROM " . $dbprefix . "shared 
 <table border=1 width="80%">
 <tr>
 <td>Site Name:</td>
-<td width="80%"><input type="text" name="sitename" style="width: 95%;" value="<?php while ($fetch = mysql_fetch_array($sitenamelookup)) {
-echo $fetch['value'];
-}?>" /></td>
+<td width="80%"><input type="text" name="sitename" style="width: 95%;" value="<?php echo mpfetchshard('sitename'); ?>" /></td>
 </tr>
 
 <tr>
 <td>Site Tagline:</td>
-<td width="80%"><input type="text" name="sitetagline" style="width: 95%;" value="<?php while ($fetch = mysql_fetch_array($sitetaglinelookup)) {
-echo $fetch['value'];
-}?>" /></td>
+<td width="80%"><input type="text" name="sitetagline" style="width: 95%;" value="<?php echo mpfetchshard('sitetagline'); ?>" /></td>
 </tr>
 
 <tr>
 <td>Site Owner (for &copy; line):</td>
-<td width="80%"><input type="text" name="orgname" style="width: 95%;" value="<?php while ($fetch = mysql_fetch_array($orgname)) {
-echo $fetch['value'];
-}?>" /></td>
+<td width="80%"><input type="text" name="orgname" style="width: 95%;" value="<?php echo mpfetchshard('orgname'); ?>" /></td>
 </tr>
 
 <tr>
 <td>Site Description:</td>
-<td><input type="text" name="description" style="width: 95%;" value="<?php while ($fetch = mysql_fetch_array($descriptionlookup)) {
-echo $fetch['value'];
-}?>" /></td>
+<td><input type="text" name="description" style="width: 95%;" value="<?php echo mpfetchshard('site_description') ?>" /></td>
 </tr>
 
 <tr>
 <td>Meta Tags:</td>
-<td><input type="text" name="tags" style="width: 95%;" value="<?php while ($fetch = mysql_fetch_array($tagslookup)) {
-echo $fetch['value'];
-}?>" /></td>
+<td><input type="text" name="tags" style="width: 95%;" value="<?php echo mpfetchshard('site_metatags') ?>" /></td>
 </tr>
 
 <tr>
 <td>Site URL:</td>
-<td><input type="text" name="url" style="width: 95%;" value="<?php while ($fetch = mysql_fetch_array($urllookup)) {
-echo $fetch['value'];
-}?>" /></td>
+<td><input type="text" name="url" style="width: 95%;" value="<?php echo mpfetchshard('siteurl') ?>" /></td>
 </tr>
 
 <tr>
@@ -180,7 +167,7 @@ echo $fetch['value'];
 <td>
 <select name="theme">
 <?php
-$dirs = glob("" . $pathfolder . "" . $themes . "/*", GLOB_ONLYDIR);
+$dirs = glob($pathfolder . "" . $themes . "/*", GLOB_ONLYDIR);
 foreach($dirs as $dir)
 {
 $themeitem = basename($dir);
@@ -201,7 +188,7 @@ if ($themeitem == $selectedtheme) {
 <td>Default Page:</td>
 <td><select name="defaultpage">
 <?php
-while($row = mysql_fetch_array($pages))
+while ($row = $pages->fetch(PDO::FETCH_ASSOC))
 {
 $pagefolder = $row['urlfolder'];
 if ($pagefolder == $selectedpage){
@@ -224,9 +211,7 @@ echo "<option value=\"" . $row['urlfolder'] . "\">" . $row['title'] . "</option>
 <tr>
 <td>Maintenance Mode Override Password:</td>
 <td>
-<input type="text" name="maintenancepass" style="width: 95%;" value="<?php while ($fetch = mysql_fetch_array($maintenancepasslookup)) {
-echo $fetch['value'];
-}?>" /><br />
+<input type="text" name="maintenancepass" style="width: 95%;" value="<?php echo mpfetchshard('mmoverride') ?>" /><br />
 </td>
 </tr>
 

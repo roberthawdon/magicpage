@@ -10,12 +10,10 @@
 
 <?php 
 
-mysql_select_db($dbdatabase , $con);
+$query = "SELECT ID, title, date, urlfolder FROM " . $dbprefix . "pages ORDER BY ID ASC"; 
+$result = $con->query($query);
 
-$sql = "SELECT ID, title, date, urlfolder FROM " . $dbprefix . "pages ORDER BY ID ASC"; 
-$items = mysql_query($sql) or die(mysql_error());
-
-while($row = mysql_fetch_array($items))
+while ($row = $result->fetch(PDO::FETCH_ASSOC))
   {
   echo "<tr>
 	      <!-- <td>" . $row['ID'] . "</td> -->
