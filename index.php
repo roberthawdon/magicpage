@@ -29,7 +29,7 @@ include("" . $common . "/dbconnect.php");
 
 include("" . $common . "/dbfetchconfig.php");
 
-$mpversion = "0.2.0-Beta5";
+$mpversion = "0.3.0-Development-PHP7";
 
 /** Load common theme functions */
 

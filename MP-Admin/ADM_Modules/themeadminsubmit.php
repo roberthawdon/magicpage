@@ -1,10 +1,9 @@
 <?php
 
-mysql_select_db($dbdatabase , $con);
-
-$themelookup = mysql_query("SELECT value FROM " . $dbprefix . "shared WHERE mpoption='theme'");
-while ($fetch = mysql_fetch_array($themelookup)) {
-$selectedtheme = $fetch['value'];
+$query = "SELECT value FROM " . $dbprefix . "shared WHERE mpoption='theme'";
+$result = $con->query($query);
+while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+$selectedtheme = $row['value'];
 }
 
 include("" . $pathfolder . "" . $themes . "/" . $selectedtheme . "/MP-TAdmin/apply-settings.php");

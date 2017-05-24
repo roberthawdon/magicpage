@@ -3,11 +3,13 @@
 $username = $_POST['username'];
 $password = $_POST['password'];
 
-mysql_select_db($dbdatabase , $con);
+$query = "SELECT * FROM " . $dbprefix . "users WHERE user_login='" . $username . "'";
 
-$fetchusers = mysql_query("SELECT * FROM " . $dbprefix . "users WHERE user_login='" . $username . "'");
+$result = $con->query($query);
 
-while($row = mysql_fetch_array($fetchusers))
+
+
+while($row = $result->fetch(PDO::FETCH_ASSOC))
 {
 $regdate = $row['user_registered'];
 $saltedpassword = md5($username . $regdate . $password);

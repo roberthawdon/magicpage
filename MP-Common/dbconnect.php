@@ -7,7 +7,7 @@
 $con = new PDO("mysql:host=" . $dbhost . ";dbname=" . $dbdatabase , $dbuser , $dbpassword);
 if (!$con)
   {
-  die('Could not connect: ' . mysql_error());
+      die('Could not connect: ' . $con->errorInfo()[2]);
   }
 
 

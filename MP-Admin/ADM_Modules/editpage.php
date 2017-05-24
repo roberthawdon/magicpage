@@ -1,16 +1,13 @@
 <?php 
 
-mysql_select_db($dbdatabase , $con);
+$query = "SELECT * FROM " . $dbprefix . "pages WHERE urlfolder='" . $viewpage . "'";
+$result = $con->query($query);
 
-$result = mysql_query("SELECT * FROM " . $dbprefix . "pages WHERE urlfolder='" . $viewpage . "'");
-
-
-while($row = mysql_fetch_array($result))
+while ($row = $result->fetch(PDO::FETCH_ASSOC))
   {
   $pagetitle = "" . $row['title'] . "";
   $editcontent = "" . $row['content'] . "";
   }
-
 
 $editcontent = addslashes(preg_replace('`[\r\n]`','',$editcontent));
 
