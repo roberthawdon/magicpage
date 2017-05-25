@@ -30,8 +30,8 @@ echo "&nbsp;";
 	      <td><a href=\"" . $row['link_url'] . "\" target=\"_blank\">" . $row['link_url'] . "</a></td>
 	      <td>";
 $query = "SELECT ID, label FROM " . $dbprefix . "navigation WHERE ID='" . $row['parent_id'] . "'";
-$result = $con->query($query);
-while ($parentname = $result->fetch(PDO::FETCH_ASSOC))
+$result2 = $con->query($query);
+while ($parentname = $result2->fetch(PDO::FETCH_ASSOC))
 {echo $parentname['label'];}
 echo "</td>
 	      <td><a href=\"/?adm=go&action=navigationitem&itemid=" . $row['id'] . "\">Edit</a></td>

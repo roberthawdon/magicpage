@@ -16,7 +16,7 @@ while ($obj = $result->fetch(PDO::FETCH_ASSOC)) {
         $sub_menu[$obj['id']]['parent'] = $obj['parent_id'];
         $sub_menu[$obj['id']]['label'] = $obj['label'];
         $sub_menu[$obj['id']]['link'] = $obj['link_url'];
-        $parent_menu[$obj['parent_id']['count']]++;
+        $parent_menu[$obj['parent_id']]['count']++;
     }
 }
 
