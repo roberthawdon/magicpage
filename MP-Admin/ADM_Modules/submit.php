@@ -32,7 +32,7 @@ $titlepage = addslashes($titlepage);
 if ($newpage == 'true') {
 $query = "INSERT INTO " . $dbprefix . "pages (title, content, date, urlfolder) VALUES ('" . $titlepage . "', '" . $done . "', '" . $modifieddate . "', '" . $pagename . "');";
 
-$result = $con->query($query)
+$result = $con->query($query);
 
 if ( $result == true ) {
     echo "<h1>Adding page...</h1>
@@ -46,7 +46,7 @@ if ( $result == true ) {
 }
 
 } else {
-query = "UPDATE " . $dbprefix . "pages SET title='" . $titlepage . "', content='" . $done . "', date='" . $modifieddate . "', urlfolder='" . $pagename . "' WHERE  urlfolder='" . $viewpage . "';";
+$query = "UPDATE " . $dbprefix . "pages SET title='" . $titlepage . "', content='" . $done . "', date='" . $modifieddate . "', urlfolder='" . $pagename . "' WHERE  urlfolder='" . $viewpage . "';";
 
 $con->query($query);
 

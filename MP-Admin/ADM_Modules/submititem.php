@@ -24,7 +24,7 @@ $query = "INSERT INTO " . $dbprefix . "navigation (label, link_url, parent_id) V
 } elseif ($delete == "true") {
 $query = "DELETE FROM " . $dbprefix ."navigation WHERE id='" . $itemid . "'";
 } else {
-$query("UPDATE " . $dbprefix . "navigation SET label='" . $label . "', link_url='" . $linkto . "', parent_id='" . $childof . "' WHERE id='" . $itemid . "';";
+$query = "UPDATE " . $dbprefix . "navigation SET label='" . $label . "', link_url='" . $linkto . "', parent_id='" . $childof . "' WHERE id='" . $itemid . "';";
 }
 
 $con->query($query);
