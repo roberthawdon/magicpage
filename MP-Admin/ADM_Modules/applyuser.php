@@ -90,7 +90,7 @@ $saltedpass = md5($seasoning);
 
 $query = "INSERT INTO " . $dbprefix . "users (first_name, middle_names, last_name, user_login, user_pass, user_email, admin, user_registered) VALUES ('" . $firstname . "', '" . $middlenames . "', '" . $lastname . "', '" . $newusername . "', '" . $saltedpass . "', '" . $email . "', '" . $admin . "', '" . $newdate . "');";
 
-$result = $con->query($query)
+$result = $con->query($query);
 
 if ( $result == true ) {
     echo "<h1>Adding New User...</h1>
