@@ -1,7 +1,7 @@
-<!-- MagicPage V<?php echo $mpversion; ?> Testing Theme -->
+<!-- MagicPage V<?php echo $mpversion; ?> Web 1.0 (OnePointOh) Theme -->
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml"> 
+<!DOCTYPE html> 
+<html> 
 <head>
 <title><?php echo mpimport("sitename"); ?></title> 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
@@ -11,10 +11,14 @@
 
 <body> 
 
-<h1><?php echo mpimport("title"); ?></h1>
+<h1><?php echo mpimport("sitename"); ?></h1>
 <p><i><?php echo mpimport("sitetagline"); ?></i></p>
 
 <div><?php include("" . $common . "/navigation.php"); ?></div>
+
+<hr />
+
+<h1><?php echo mpimport("title"); ?></h1>
 
 <div><?php echo mpimport("content"); ?></div>
 
