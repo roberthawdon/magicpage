@@ -9,7 +9,7 @@
 
 /** Check if first run is required */
 
-$mpversion = "0.3.0-Development-PHP7";
+$mpversion = "0.3.0-Development-Authenticaiton";
 
 $expectedconf = 'config.php';
 
