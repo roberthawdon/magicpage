@@ -1,3 +1,5 @@
+# WARNING: MAJOR SECURITY FLAWS, DO NOT USE IN PRODUCTION.
+
 # magicpage
 A simple CMS written by Robert Ian Hawdon originally as a college project.
 
