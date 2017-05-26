@@ -1,5 +1,7 @@
 <?php
 
+global $sitesalt;
+
 $username = $_POST['username'];
 $password = $_POST['password'];
 
@@ -11,16 +13,17 @@ $result = $con->query($query);
 
 while($row = $result->fetch(PDO::FETCH_ASSOC))
 {
-$regdate = $row['user_registered'];
-$saltedpassword = md5($username . $regdate . $password);
+/*$regdate = $row['user_registered'];
+$saltedpassword = md5($username . $regdate . $password); */
+
+    $usersalt = $row['salt'];
+    $saltedpassword = hashPassword($password, $usersalt, $sitesalt);
 
 if ($row['user_login'] == $username AND $row['user_pass'] == $saltedpassword AND $row['admin'] == '1') {
 setcookie("mplogin", "true");
 setcookie("mpuser", $username);
 }
 }
-
-
 
 ?>
 <h1>Processing</h1>
