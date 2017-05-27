@@ -1,15 +1,12 @@
 <?php
 
-global $sitesalt;
-
 $user = $_POST['user'];
 
-$query = "SELECT user_login, user_pass, salt FROM " . $dbprefix . "users WHERE user_login='" . $user . "'"; 
+$query = "SELECT user_login, user_pass FROM " . $dbprefix . "users WHERE user_login='" . $user . "'"; 
 $result = $con->query($query);
 
 while($row = $result->fetch(PDO::FETCH_ASSOC)) {
 $fetchpass = $row['user_pass'];
-$fetchsalt = $row['salt'];
 }
 
 $newdate = date('Y-m-d H:i:s');
@@ -46,14 +43,12 @@ echo "<h1>Deleting user...</h1>
 }
 
 if ($oldpass != "") {
-if (hashPassword($oldpass, $fetchsalt, $sitesalt) == $fetchpass) {
+if (password_verify($oldpass, $fetchpass)) {
 if ($newpass1 == $newpass2) {
 
-$newsalt = generateSalt();
+$saltedpass = password_hash($newpass1, PASSWORD_DEFAULT);
 
-$saltedpass = hashPassword($newpass1, $newsalt, $sitesalt);
-
-$query = "UPDATE " . $dbprefix . "users SET first_name='" . $firstname . "', middle_names='" . $middlenames . "', last_name='" . $lastname . "', user_pass='" . $saltedpass . "', user_email='" . $email . "', admin='" . $admin . "', salt='" . $newsalt . "'  WHERE user_login='" . $user . "'";
+$query = "UPDATE " . $dbprefix . "users SET first_name='" . $firstname . "', middle_names='" . $middlenames . "', last_name='" . $lastname . "', user_pass='" . $saltedpass . "', user_email='" . $email . "', admin='" . $admin . "'  WHERE user_login='" . $user . "'";
 
 $con->query($query);
 
@@ -87,11 +82,9 @@ echo "<h1>Updating...</h1>
 if ($newpass1 == $newpass2) {
 
 
-$newsalt = generateSalt();
+$saltedpass = password_hash($newpass1, PASSWORD_DEFAULT);
 
-$saltedpass = hashPassword($newpass1, $newsalt, $sitesalt);
-
-$query = "INSERT INTO " . $dbprefix . "users (first_name, middle_names, last_name, user_login, user_pass, user_email, admin, user_registered, salt) VALUES ('" . $firstname . "', '" . $middlenames . "', '" . $lastname . "', '" . $newusername . "', '" . $saltedpass . "', '" . $email . "', '" . $admin . "', '" . $newdate . "', '" . $newsalt . "');";
+$query = "INSERT INTO " . $dbprefix . "users (first_name, middle_names, last_name, user_login, user_pass, user_email, admin, user_registered) VALUES ('" . $firstname . "', '" . $middlenames . "', '" . $lastname . "', '" . $newusername . "', '" . $saltedpass . "', '" . $email . "', '" . $admin . "', '" . $newdate . "');";
 
 $result = $con->query($query);
 
