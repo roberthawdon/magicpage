@@ -46,7 +46,7 @@ if ($oldpass != "") {
 if (password_verify($oldpass, $fetchpass)) {
 if ($newpass1 == $newpass2) {
 
-$saltedpass = password_hash($newpass1, PASSWORD_DEFAULT);
+$saltedpass = password_hash(base64_encode(hash('sha384', $newpass1)), PASSWORD_DEFAULT);
 
 $query = "UPDATE " . $dbprefix . "users SET first_name='" . $firstname . "', middle_names='" . $middlenames . "', last_name='" . $lastname . "', user_pass='" . $saltedpass . "', user_email='" . $email . "', admin='" . $admin . "'  WHERE user_login='" . $user . "'";
 
@@ -82,7 +82,7 @@ echo "<h1>Updating...</h1>
 if ($newpass1 == $newpass2) {
 
 
-$saltedpass = password_hash($newpass1, PASSWORD_DEFAULT);
+$saltedpass = password_hash(base64_encode(hash('sha384', $newpass1)), PASSWORD_DEFAULT);
 
 $query = "INSERT INTO " . $dbprefix . "users (first_name, middle_names, last_name, user_login, user_pass, user_email, admin, user_registered) VALUES ('" . $firstname . "', '" . $middlenames . "', '" . $lastname . "', '" . $newusername . "', '" . $saltedpass . "', '" . $email . "', '" . $admin . "', '" . $newdate . "');";
 

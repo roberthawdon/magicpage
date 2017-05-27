@@ -14,7 +14,7 @@ while($row = $result->fetch(PDO::FETCH_ASSOC))
 /*$regdate = $row['user_registered'];
 $saltedpassword = md5($username . $regdate . $password); */
 
-if (password_verify($password, $row['user_pass']) AND $row['admin'] == '1') {
+    if (password_verify(base64_encode(hash('sha384', $password)), $row['user_pass']) AND $row['admin'] == '1') {
 setcookie("mplogin", "true");
 setcookie("mpuser", $username);
 }
