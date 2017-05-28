@@ -1,13 +1,20 @@
 <?php
 
 /**
- * OP-EZY Magicpage loader, Version 0.0.12
+ * MagicPage loader, Version 0.1.0
  * Written by Robert Ian Hawdon.
  * Connects to database, loads information, displays the page and closes connection again.
  * Loads admin section if requested
  */
 
+/** Start a session */
+
+session_name("MPSESSID");
+session_start();
+
 /** Check if first run is required */
+
+$mpversion = "0.3.0-Development";
 
 $expectedconf = 'config.php';
 
@@ -23,17 +30,25 @@ include($config);
 
 /** Connect to Database */
 
-include("" . $common . "/dbconnect.php");
+include($common . "/dbconnect.php");
 
 /** Global Config */
 
-include("" . $common . "/dbfetchconfig.php");
+include($common . "/dbfetchconfig.php");
 
-$mpversion = "0.3.0-Development-PHP7";
+/** MagicPage Functions **/
+
+include($common . "/mpfunctions.php");
 
 /** Load common theme functions */
 
-include("" . $common . "/themefunctions.php");
+include($common . "/themefunctions.php");
+
+/** Check auth cookie if cookie exists and not authenticated */
+
+if ( isset($_COOKIE['MPAUTH']) AND !isset($_SESSION['authenticated']) ) {
+    checkAuth();
+}
 
 /** Check for maintenance mode and override password **/
 
@@ -81,14 +96,14 @@ if ( $viewpage == "" ) {
 }
 
 
-include("" . $themes . "/" . $MPTheme . "/index.php"); 
+include($themes . "/" . $MPTheme . "/index.php"); 
 
 }
 
-include("" . $common . "/dbdisconnect.php");
+include($common . "/dbdisconnect.php");
 
 /**
- * End of OP-EZY Magicpage loader
+ * End of OP-EZY MagicPage loader
  */
 
 ?> 

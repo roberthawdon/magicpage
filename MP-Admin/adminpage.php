@@ -4,7 +4,6 @@
  <head>
 
 <?php
-
 /** Load Module Loader **/
 
 include("ADM_Modules/module_loader.php");
@@ -13,18 +12,20 @@ include("ADM_Modules/module_loader.php");
 
 $action = $_GET['action'];
 $viewpage = $_GET['page'];
-$logincookie = $_COOKIE['mplogin'];
-$loggedinuser = $_COOKIE['mpuser'];
+# $logincookie = $_COOKIE['mplogin'];
+# $loggedinuser = $_COOKIE['mpuser'];
 
+$authuser = $_SESSION['username'];
+$authenticated = $_SESSION['authenticated'];
 
 ?>
-    <title>Magicpage: Admin Panel</title>
+    <title>MagicPage: Admin Panel</title>
 	<link href="MP-Admin/admin.css" rel="stylesheet" type="text/css" media="screen" /> 
 <!-- TinyMCE -->
 
 </head>
 <body>
-<h1 class="titlebar">Magicpage Admin</h1>
+<h1 class="titlebar">MagicPage Admin</h1>
 <div id="menu"> 
 <h2>Admin Menu</h2> 
 <?php include("ADM_Modules/navigation.php"); ?>
@@ -32,12 +33,12 @@ $loggedinuser = $_COOKIE['mpuser'];
 
 <div id="content"> 
 <?php
-if ($logincookie != 'true' AND $action != 'checkuser') {
+if ( $authenticated != "true" AND $action != 'checkuser') {
 echo mpadmin('login');
 } else {
 echo mpadmin($action);}
 ?>
 </div>
-<p align="right">Magicpage Version: <?php echo $mpversion; ?> <a href="https://github.com/roberthawdon/magicpage"><img src="MP-Admin/images/magicpage.png" srcset="MP-Admin/images/magicpage_2x.png 2x" alt="Powered by Magicpage" title="Powered by Magicpage"></a></p>
+<p align="right">MagicPage Version: <?php echo $mpversion; ?> <a href="https://github.com/roberthawdon/magicpage"><img src="MP-Admin/images/magicpage.png" srcset="MP-Admin/images/magicpage_2x.png 2x" alt="Powered by MagicPage" title="Powered by MagicPage"></a></p>
 </body>
 </html>

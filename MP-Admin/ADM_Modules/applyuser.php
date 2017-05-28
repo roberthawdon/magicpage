@@ -6,7 +6,7 @@ $query = "SELECT user_login, user_pass FROM " . $dbprefix . "users WHERE user_lo
 $result = $con->query($query);
 
 while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-$fetchpass = $fetch['user_pass'];
+$fetchpass = $row['user_pass'];
 }
 
 $newdate = date('Y-m-d H:i:s');
@@ -29,8 +29,6 @@ if ($type == "new") {
 $newusername = $_POST['username'];
 }
 
-$oldsalt = $user . $regdate . $oldpass;
-
 if ($type == "edit") {
 
 if ($delete == "true") {
@@ -45,11 +43,10 @@ echo "<h1>Deleting user...</h1>
 }
 
 if ($oldpass != "") {
-if (md5($oldsalt) == $fetchpass) {
+if (password_verify($oldpass, $fetchpass)) {
 if ($newpass1 == $newpass2) {
 
-$seasoning = $user . "" . $regdate . "" . $newpass1;
-$saltedpass = md5($seasoning);
+$saltedpass = password_hash(base64_encode(hash('sha384', $newpass1)), PASSWORD_DEFAULT);
 
 $query = "UPDATE " . $dbprefix . "users SET first_name='" . $firstname . "', middle_names='" . $middlenames . "', last_name='" . $lastname . "', user_pass='" . $saltedpass . "', user_email='" . $email . "', admin='" . $admin . "'  WHERE user_login='" . $user . "'";
 
@@ -85,8 +82,7 @@ echo "<h1>Updating...</h1>
 if ($newpass1 == $newpass2) {
 
 
-$seasoning = $newusername . "" . $newdate . "" . $newpass1;
-$saltedpass = md5($seasoning);
+$saltedpass = password_hash(base64_encode(hash('sha384', $newpass1)), PASSWORD_DEFAULT);
 
 $query = "INSERT INTO " . $dbprefix . "users (first_name, middle_names, last_name, user_login, user_pass, user_email, admin, user_registered) VALUES ('" . $firstname . "', '" . $middlenames . "', '" . $lastname . "', '" . $newusername . "', '" . $saltedpass . "', '" . $email . "', '" . $admin . "', '" . $newdate . "');";
 

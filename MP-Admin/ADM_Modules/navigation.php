@@ -1,6 +1,6 @@
 <?php
 
-if ($logincookie == 'true'){
+if ($authenticated == 'true'){
 echo "<ul> 
 <li><a href=\"/\">Main Site</a></li> 
 </ul>
