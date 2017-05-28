@@ -1,8 +1,8 @@
 <?php 
 
-global $loggedinuser;
+global $authuser;
 
-$query = "SELECT first_name, middle_names, last_name, user_login, user_pass, user_email, user_registered FROM " . $dbprefix . "users WHERE user_login='" . $loggedinuser . "'";
+$query = "SELECT first_name, middle_names, last_name, user_login, user_pass, user_email, user_registered FROM " . $dbprefix . "users WHERE user_login='" . $authuser . "'";
 
 $result = $con->query($query);
 while ($row = $result->fetch(PDO::FETCH_ASSOC)) {

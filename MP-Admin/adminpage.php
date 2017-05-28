@@ -5,6 +5,7 @@
 
 <?php
 
+session_start();
 /** Load Module Loader **/
 
 include("ADM_Modules/module_loader.php");
@@ -13,9 +14,11 @@ include("ADM_Modules/module_loader.php");
 
 $action = $_GET['action'];
 $viewpage = $_GET['page'];
-$logincookie = $_COOKIE['mplogin'];
-$loggedinuser = $_COOKIE['mpuser'];
+# $logincookie = $_COOKIE['mplogin'];
+# $loggedinuser = $_COOKIE['mpuser'];
 
+$authuser = $_SESSION['username'];
+$authenticated = $_SESSION['authenticated'];
 
 ?>
     <title>Magicpage: Admin Panel</title>
@@ -32,7 +35,7 @@ $loggedinuser = $_COOKIE['mpuser'];
 
 <div id="content"> 
 <?php
-if ($logincookie != 'true' AND $action != 'checkuser') {
+if ( $authenticated != "true" AND $action != 'checkuser') {
 echo mpadmin('login');
 } else {
 echo mpadmin($action);}

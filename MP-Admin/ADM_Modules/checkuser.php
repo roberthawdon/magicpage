@@ -16,8 +16,12 @@ while($row = $result->fetch(PDO::FETCH_ASSOC))
 if (password_verify(base64_encode(hash('sha384', $password)), $row['user_pass']) AND $row['admin'] == '1') {
     /* HA HA LOL. I LOLZ AT MY PAST SECURITY FLAWZ */
 
-      setcookie("mplogin", "true");
-setcookie("mpuser", $username);
+    session_start();
+    $_SESSION['username'] = $username;
+    $_SESSION['authenticated'] = "true";
+
+      # setcookie("mplogin", "true");
+      # setcookie("mpuser", $username);
 
     $userid = $row['ID'];
     $selector = genRandomBase64(12);
@@ -27,16 +31,16 @@ setcookie("mpuser", $username);
 
     if ( $remember == "true" ) {
         $expiry = time() + 2592000; # Remember for 30 days
-        setcookie("mpauth", rawurlencode($selector . ":" . $validator), $expiry);
+        # setcookie("mpauth", rawurlencode($selector . ":" . $validator), $expiry);
     } else {
         $expiry = time() + 86400; # Force the user to log out if the session lasts over 24 hours
-        setcookie("mpauth", rawurlencode($selector . ":" . $validator));
+        # setcookie("mpauth", rawurlencode($selector . ":" . $validator));
     }
 
 
     $query = "INSERT INTO " . $dbprefix . "auth (selector, hashedValidator, userid, expires) VALUES ('" . $selector . "', '" . $hashedvalidator . "', '" . $userid . "', '" . $expiry . "')";
 
-    $con->query($query);
+    # $con->query($query);
 
 
 }
