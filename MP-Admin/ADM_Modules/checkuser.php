@@ -31,16 +31,12 @@ if (password_verify(base64_encode(hash('sha384', $password)), $row['user_pass'])
 
     if ( $remember == "true" ) {
         $expiry = time() + 2592000; # Remember for 30 days
-        # setcookie("mpauth", rawurlencode($selector . ":" . $validator), $expiry);
-    } else {
-        $expiry = time() + 86400; # Force the user to log out if the session lasts over 24 hours
-        # setcookie("mpauth", rawurlencode($selector . ":" . $validator));
+        setcookie("MPAUTH", rawurlencode($selector . ":" . $validator), $expiry);
+        $query = "INSERT INTO " . $dbprefix . "auth (selector, hashedValidator, userid, expires) VALUES ('" . $selector . "', '" . $hashedvalidator . "', '" . $userid . "', '" . $expiry . "')";
+
+        $con->query($query);
     }
 
-
-    $query = "INSERT INTO " . $dbprefix . "auth (selector, hashedValidator, userid, expires) VALUES ('" . $selector . "', '" . $hashedvalidator . "', '" . $userid . "', '" . $expiry . "')";
-
-    # $con->query($query);
 
 
 }

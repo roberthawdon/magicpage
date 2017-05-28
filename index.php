@@ -1,11 +1,16 @@
 <?php
 
 /**
- * Magicpage loader, Version 0.1.0
+ * MagicPage loader, Version 0.1.0
  * Written by Robert Ian Hawdon.
  * Connects to database, loads information, displays the page and closes connection again.
  * Loads admin section if requested
  */
+
+/** Start a session */
+
+session_name("MPSESSID");
+session_start();
 
 /** Check if first run is required */
 
@@ -38,6 +43,12 @@ include($common . "/mpfunctions.php");
 /** Load common theme functions */
 
 include($common . "/themefunctions.php");
+
+/** Check auth cookie if cookie exists and not authenticated */
+
+if ( isset($_COOKIE['MPAUTH']) AND !isset($_SESSION['authenticated']) ) {
+    checkAuth();
+}
 
 /** Check for maintenance mode and override password **/
 
@@ -92,7 +103,7 @@ include($themes . "/" . $MPTheme . "/index.php");
 include($common . "/dbdisconnect.php");
 
 /**
- * End of OP-EZY Magicpage loader
+ * End of OP-EZY MagicPage loader
  */
 
 ?> 

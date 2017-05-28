@@ -21,7 +21,7 @@ session_destroy();
 
 setcookie("mplogin", "", time() - 3600);
 setcookie("mpuser", "", time() - 3600);
-setcookie("mpauth", "", time() - 3600);
+setcookie("MPAUTH", "", time() - 3600);
 ?>
 
 <h1>Processing</h1>
