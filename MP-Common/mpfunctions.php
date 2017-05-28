@@ -1,11 +1,11 @@
 <?php
 
 /**
- * MagicPage Common Functions Module, Version 0.0.1
+ * MagicPage Common Functions Module, Version 0.0.2
  * 2017 Robert Hawdon
  */
 
-function generateSalt($length = 12) {
+function genRandomBase64($length = 12) {
     $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
     $charactersLength = strlen($characters);
     $randomString = '';
@@ -13,12 +13,6 @@ function generateSalt($length = 12) {
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
     return $randomString;
-}
-
-function hashPassword($password, $salt, $sitesalt="") {
-    $combined = $password . $salt . $sitesalt;
-    $hashed = hash('sha256', $combined);
-    return $hashed;
 }
 
 ?>

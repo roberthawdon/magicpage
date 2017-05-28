@@ -11,11 +11,8 @@
 
 <body> 
 
-<p>User Salt (12 Chars):<br />
-<?php echo generateSalt(); ?></p>
-
-<p>Site Salt (64 Chars):<br />
-<?php echo generateSalt(64); ?></p>
+<p>Session Token:<br />
+<?php echo genRandomBase64(128); ?></p>
 
 </body>
 </html>
