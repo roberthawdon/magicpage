@@ -14,7 +14,7 @@ session_start();
 
 /** Check if first run is required */
 
-$mpversion = "0.3.0-Development-Authenticaiton";
+$mpversion = "0.3.0-Development";
 
 $expectedconf = 'config.php';
 
