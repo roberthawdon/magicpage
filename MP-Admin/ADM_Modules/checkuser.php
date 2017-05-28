@@ -36,7 +36,6 @@ setcookie("mpuser", $username);
 
     $query = "INSERT INTO " . $dbprefix . "auth (selector, hashedValidator, userid, expires) VALUES ('" . $selector . "', '" . $hashedvalidator . "', '" . $userid . "', '" . $expiry . "')";
 
-    echo $query;
     $con->query($query);
 
 
