@@ -62,7 +62,7 @@ echo "<tr>
 <tr>
 <td>Retype <?php if ($new != "true") { echo "New"; } ?> Password</td>
 <td><input type="password" name="password2" value="" /></td>
-<td>&nbsp;<<?php echo $lastname; ?>/td>
+<td>&nbsp;</td>
 </tr>
 <tr>
 <td>First Name</td>
