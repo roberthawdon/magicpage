@@ -57,12 +57,17 @@ echo "<tr>
 <tr>
 <td><?php if ($new != "true") { echo "New"; } ?> Password</td>
 <td><input type="password" name="password1" value="" /></td>
-<td>&nbsp;</td>
+<td rowspan="2"><p>We don't place restrictions on passwords, but we recommend the following:</p>
+    <ul>
+    <li>Should be <strong>no shorter than</strong> 8 characters. - There is no upper limit restriction.</li>
+<li>Should contain <strong>at least</strong> a mixture of upper and lower case charaters, numbers, and symbols. - MagicPage supports the full unicode character set.</li>
+<li>Should not be the same password used on other online accounts. - We're confident the MagicPage password storage system is secure, we can't vouch for other services, so sharing passwords should be avoided.</li>
+<li>We recommend the use of a password manager to generate and store strong passwords.</li>
+</ul></td>
 </tr>
 <tr>
 <td>Retype <?php if ($new != "true") { echo "New"; } ?> Password</td>
 <td><input type="password" name="password2" value="" /></td>
-<td>&nbsp;</td>
 </tr>
 <tr>
 <td>First Name</td>
