@@ -1,12 +1,14 @@
 <?php
 
+global $authuser;
+
 $user = $_POST['user'];
 
-$query = "SELECT user_login, user_pass FROM " . $dbprefix . "users WHERE user_login='" . $user . "'"; 
+$query = "SELECT user_login, user_pass FROM " . $dbprefix . "users WHERE user_login='" . $user . "'";
 $result = $con->query($query);
 
 while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-$fetchpass = $row['user_pass'];
+    $fetchpass = $row['user_pass'];
 }
 
 $newdate = date('Y-m-d H:i:s');
@@ -21,91 +23,91 @@ $email = $_POST['email'];
 $regdate = $_POST['regdate'];
 $admin = $_POST['admin'];
 if ($admin != "1") {
-$admin = "0";
+    $admin = "0";
 }
 $type = $_POST['type'];
 
 if ($type == "new") {
-$newusername = $_POST['username'];
+    $newusername = $_POST['username'];
 }
 
 if ($type == "edit") {
 
-if ($delete == "true") {
+    if ($delete == "true") {
 
-$query = "DELETE FROM " . $dbprefix ."users WHERE user_login='" . $user . "'";
+        $query = "DELETE FROM " . $dbprefix ."users WHERE user_login='" . $user . "'";
 
-$con->query($query);
+        $con->query($query);
 
-echo "<h1>Deleting user...</h1>
+        echo "<h1>Deleting user...</h1>
 <meta http-equiv=\"refresh\" content=\"1; url=/?adm=go&action=usersettings\" />";
 
-}
+    }
 
-if ($oldpass != "") {
-if (password_verify($oldpass, $fetchpass)) {
-if ($newpass1 == $newpass2) {
+    if ($newpass1 != "") {
+        if (password_verify(base64_encode(hash('sha384', $oldpass)), $fetchpass) || $authuser != $user) {
+            if ($newpass1 == $newpass2) {
 
-$saltedpass = password_hash(base64_encode(hash('sha384', $newpass1)), PASSWORD_DEFAULT);
+                $saltedpass = password_hash(base64_encode(hash('sha384', $newpass1)), PASSWORD_DEFAULT);
 
-$query = "UPDATE " . $dbprefix . "users SET first_name='" . $firstname . "', middle_names='" . $middlenames . "', last_name='" . $lastname . "', user_pass='" . $saltedpass . "', user_email='" . $email . "', admin='" . $admin . "'  WHERE user_login='" . $user . "'";
+                $query = "UPDATE " . $dbprefix . "users SET first_name='" . $firstname . "', middle_names='" . $middlenames . "', last_name='" . $lastname . "', user_pass='" . $saltedpass . "', user_email='" . $email . "', admin='" . $admin . "'  WHERE user_login='" . $user . "'";
 
-$con->query($query);
+                $con->query($query);
 
-echo "<h1>Updating...</h1>
+                echo "<h1>Updating...</h1>
 <meta http-equiv=\"refresh\" content=\"1; url=/?adm=go&action=edituser&user=" . $user . "\" />";
 
-} else {
+            } else {
 
-echo "<p>The new password you specified wasn't entered correctly in both boxes</p>";
+                echo "<p>The new password you specified wasn't entered correctly in both boxes</p>";
 
-}
+            }
 
-} else {
+        } else {
 
-echo "<p>The password you specified was incorrect</p>";
+            echo "<p>The password you specified was incorrect</p>";
 
-}
+        }
 
-} else {
+    } else {
 
-$query = "UPDATE " . $dbprefix . "users SET first_name='" . $firstname . "', middle_names='" . $middlenames . "', last_name='" . $lastname . "', user_email='" . $email . "', admin='" . $admin . "'  WHERE user_login='" . $user . "'";
+        $query = "UPDATE " . $dbprefix . "users SET first_name='" . $firstname . "', middle_names='" . $middlenames . "', last_name='" . $lastname . "', user_email='" . $email . "', admin='" . $admin . "'  WHERE user_login='" . $user . "'";
 
-$con->query($query);
+        $con->query($query);
 
-echo "<h1>Updating...</h1>
+        echo "<h1>Updating...</h1>
 <meta http-equiv=\"refresh\" content=\"1; url=/?adm=go&action=edituser&user=" . $user . "\" />";
 
-}
+    }
 
 } elseif ($type == "new") {
-if ($newpass1 == $newpass2) {
+    if ($newpass1 == $newpass2) {
 
 
-$saltedpass = password_hash(base64_encode(hash('sha384', $newpass1)), PASSWORD_DEFAULT);
+        $saltedpass = password_hash(base64_encode(hash('sha384', $newpass1)), PASSWORD_DEFAULT);
 
-$query = "INSERT INTO " . $dbprefix . "users (first_name, middle_names, last_name, user_login, user_pass, user_email, admin, user_registered) VALUES ('" . $firstname . "', '" . $middlenames . "', '" . $lastname . "', '" . $newusername . "', '" . $saltedpass . "', '" . $email . "', '" . $admin . "', '" . $newdate . "');";
+        $query = "INSERT INTO " . $dbprefix . "users (first_name, middle_names, last_name, user_login, user_pass, user_email, admin, user_registered) VALUES ('" . $firstname . "', '" . $middlenames . "', '" . $lastname . "', '" . $newusername . "', '" . $saltedpass . "', '" . $email . "', '" . $admin . "', '" . $newdate . "');";
 
-$result = $con->query($query);
+        $result = $con->query($query);
 
-if ( $result == true ) {
-    echo "<h1>Adding New User...</h1>
+        if ( $result == true ) {
+            echo "<h1>Adding New User...</h1>
 <meta http-equiv=\"refresh\" content=\"1; url=/?adm=go&action=edituser&user=" . $newusername . "\" />";
-} else {
-    if ( $con->errorCode() == 1062 ) { // if this error number is the duplicate error, handle it. 
-        print "A user with the unique name " . $username . " already exists! Press \"back\" in your browser and change this element."; 
+        } else {
+            if ( $con->errorCode() == 1062 ) { // if this error number is the duplicate error, handle it.
+                print "A user with the unique name " . $username . " already exists! Press \"back\" in your browser and change this element.";
+            } else {
+                die( "Error in this query: " . $con->errorInfo()[2] . " " . $insert );
+            }
+        }
+
+
+
+
+
     } else {
-        die( "Error in this query: " . $con->errorInfo()[2] . " " . $insert ); 
-} 
+        echo "<p>The new password you specified wasn't entered correctly in both boxes</p>";
+    }
 }
-
-
-
-
-
-} else {
-echo "<p>The new password you specified wasn't entered correctly in both boxes</p>";
-}
-} 
 
 ?>

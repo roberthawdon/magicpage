@@ -1,5 +1,7 @@
 <?php
 
+global $authuser;
+
 $user = $_GET['user'];
 $new = $_GET['new'];
 
@@ -46,11 +48,11 @@ echo $user . "
 }
 ?>
 </tr>
-<?php if ($new != "true") {
+<?php if ($new != "true" && $authuser == $user) {
 echo "<tr>
 <td>Current Password</td>
 <td><input type=\"password\" name=\"currentpassword\" value=\"\" /></td>
-<td>If left blank, password will <strong>not</strong> be changed</td>
+<td>Required only if you're changing your password.</td>
 </tr>";
 }
 ?>
