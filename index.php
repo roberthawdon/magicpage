@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MagicPage loader, Version 0.1.0
+ * MagicPage loader, Version 0.1.1
  * Written by Robert Ian Hawdon.
  * Connects to database, loads information, displays the page and closes connection again.
  * Loads admin section if requested
@@ -55,13 +55,13 @@ if ( isset($_COOKIE['MPAUTH']) AND !isset($_SESSION['authenticated']) ) {
 $query = "SELECT value FROM " . $dbprefix . "shared WHERE mpoption='maintenance'";
 $result = $con->query($query);
 while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-$maintenance = $row['value'];
+    $maintenance = $row['value'];
 }
 
 $query = "SELECT value FROM " . $dbprefix . "shared WHERE mpoption='mmoverride'";
 $result = $con->query($query);
 while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-$mmoverridepass = $row['value'];
+    $mmoverridepass = $row['value'];
 }
 
 $mmoverride = $_GET['mmoverride'];
@@ -73,30 +73,32 @@ $adm = $_GET['adm'];
 
 if ( $adm == "go" ) {
 
-include ("MP-Admin/adminpage.php");
+    include ("MP-Admin/adminpage.php");
 
 } elseif ( $maintenance == "1" AND $mmoverride != $mmoverridepass ) {
 
-/** If maintenance mode is true, then load block the site from showing unless overridden **/
+    /** If maintenance mode is true, then load block the site from showing unless overridden **/
 
 
 
-include ("MP-Admin/Error/maintenance.php");
+    include ("MP-Admin/Error/maintenance.php");
 
 
 
 } else {
 
-/** Loader */
+    /** Loader */
 
-$viewpage = $_GET['viewpage'];
+    $viewpage = $_GET['viewpage'];
 
-if ( $viewpage == "" ) {
-      $viewpage = $HomepageID ;
-}
+    if ( $viewpage == "" ) {
+        $viewpage = $HomepageID ;
+    }
 
+    $pagedata = fetchpage();
+    http_response_code($pagedata[0]);
 
-include($themes . "/" . $MPTheme . "/index.php"); 
+    include($themes . "/" . $MPTheme . "/index.php"); 
 
 }
 

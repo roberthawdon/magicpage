@@ -1,182 +1,196 @@
 <?php
 
 /**
- * OP-EZY MagicPage Common Theme Functions Module, Version 0.0.10
+ * OP-EZY MagicPage Common Theme Functions Module, Version 0.1.0
  * Reduces the amount of PHP and MySQL code in each theme by using the
- * "mp-import" function defined in this module. This makes building themes
+ * "mpimport" function defined in this module. This makes building themes
  * much easier too.
  */
 
+function fetchpage() {
+    global $con;
+    global $dbhost;
+    global $dbuser;
+    global $dbpassword;
+    global $dbdatabase;
+    global $dbprefix;
+    global $viewpage;
+
+    $query = "SELECT title, content, owner, date, extraheader, extrabodyoption, preheader FROM MP_pages WHERE urlfolder = '" . $viewpage . "'";
+    $result = $con->query($query);
+
+    if ($result->rowCount() == 1){
+        while($row = $result->fetch(PDO::FETCH_ASSOC))
+        {
+            $pagestatuscode      = "200";
+            $pagetitle           = $row['title'];
+            $pagecontent         = $row['content'];
+            $pageowner           = $row['owner'];
+            $pagedate            = $row['date'];
+            $pageextraheader     = $row['extraheader'];
+            $pageextrabodyoption = $row['extrabodyoption'];
+            $pagepreheader       = $row['preheader'];
+        }
+    } elseif ($result->rowCount() == 0){
+        // TO DO: Make this a custom setting.
+        $pagestatuscode      = "404";
+        $pagetitle           = "Not found";
+        $pagecontent         = "<p>The page you're looking for is not found.</p>";
+        $pageowner           = "";
+        $pagedate            = "";
+        $pageextraheader     = "";
+        $pageextrabodyoption = "";
+        $pagepreheader       = "";
+    } else {
+        // If we get more than one result, something's gone horribly, horribly wrong.
+        $pagestatuscode      = "500";
+        $pagetitle           = "Internal Server Error";
+        $pagecontent         = "<p>There has been a fault retrieving this page.</p>";
+        $pageowner           = "";
+        $pagedate            = "";
+        $pageextraheader     = "";
+        $pageextrabodyoption = "";
+        $pagepreheader       = "";
+    }
+
+    return array ($pagestatuscode, $pagetitle, $pagecontent, $pageowner, $pagedate, $pageextraheader, $pageextrabodyoption, $pagepreheader);
+}
+
 function mpimport($themearg) {
 
-global $con;
-global $dbhost;
-global $dbuser;
-global $dbpassword;
-global $dbdatabase;
-global $dbprefix;
-global $themes;
-global $common;
-global $viewpage;
+    global $pagedata;
+    global $con;
+    global $dbhost;
+    global $dbuser;
+    global $dbpassword;
+    global $dbdatabase;
+    global $dbprefix;
+    global $themes;
+    global $common;
+    global $viewpage;
 
-      if ($themearg == "keywords") {
-
-
-$query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='site_metatags'";
-$result = $con->query($query);
-
-while($row = $result->fetch(PDO::FETCH_ASSOC))
-  {
-  echo "" . $row['value'] . "";
-  }
-
-}
-
-      elseif ($themearg == "sitename") {
+    if ($themearg == "keywords") {
 
 
-$query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='sitename'";
-$result = $con->query($query);
+        $query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='site_metatags'";
+        $result = $con->query($query);
+
+        while($row = $result->fetch(PDO::FETCH_ASSOC))
+        {
+            echo "" . $row['value'] . "";
+        }
+
+    }
+
+    elseif ($themearg == "sitename") {
 
 
-while($row = $result->fetch(PDO::FETCH_ASSOC))
-  {
-  echo "" . $row['value'] . "";
-  }
-
-}
-
-      elseif ($themearg == "sitetagline") {
+        $query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='sitename'";
+        $result = $con->query($query);
 
 
-$query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='sitetagline'";
-$result = $con->query($query);
+        while($row = $result->fetch(PDO::FETCH_ASSOC))
+        {
+            echo "" . $row['value'] . "";
+        }
+
+    }
+
+    elseif ($themearg == "sitetagline") {
 
 
-while($row = $result->fetch(PDO::FETCH_ASSOC))
-  {
-  echo "" . $row['value'] . "";
-  }
-
-}
-
-      elseif ($themearg == "orgname") {
+        $query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='sitetagline'";
+        $result = $con->query($query);
 
 
-$query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='orgname'";
-$result = $con->query($query);
+        while($row = $result->fetch(PDO::FETCH_ASSOC))
+        {
+            echo "" . $row['value'] . "";
+        }
+
+    }
+
+    elseif ($themearg == "orgname") {
 
 
-while($row = $result->fetch(PDO::FETCH_ASSOC))
-  {
-  echo "" . $row['value'] . "";
-  }
-
-}
-
-      elseif ($themearg == "description") {
+        $query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='orgname'";
+        $result = $con->query($query);
 
 
-$query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='site_description'";
-$result = $con->query($query);
+        while($row = $result->fetch(PDO::FETCH_ASSOC))
+        {
+            echo "" . $row['value'] . "";
+        }
+
+    }
+
+    elseif ($themearg == "description") {
 
 
-while($row = $result->fetch(PDO::FETCH_ASSOC))
-  {
-  echo "" . $row['value'] . "";
-  }
-
-}
-
-      elseif ($themearg == "title") {
+        $query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='site_description'";
+        $result = $con->query($query);
 
 
-$query = "SELECT * FROM " . $dbprefix . "pages WHERE urlfolder='" . $viewpage . "'";
-$result = $con->query($query);
+        while($row = $result->fetch(PDO::FETCH_ASSOC))
+        {
+            echo "" . $row['value'] . "";
+        }
 
+    }
 
-while($row = $result->fetch(PDO::FETCH_ASSOC))
-  {
-  echo "" . $row['title'] . "";
-  }
+    elseif ($themearg == "title") {
 
-}
+        echo $pagedata[1];
+
+    }
 
     elseif ($themearg == "content") {
 
 
-$query = "SELECT * FROM " . $dbprefix . "pages WHERE urlfolder='" . $viewpage . "'";
-$result = $con->query($query);
+        echo $pagedata[2];
 
-
-while($row = $result->fetch(PDO::FETCH_ASSOC))
-  {
-  echo "" . $row['content'] . "";
-  }
-
-}
+    }
 
     elseif ($themearg == "sideboard") {
 
 
-$query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='sideboard'";
-$result = $con->query($query);
+        $query = "SELECT * FROM " . $dbprefix . "shared WHERE mpoption='sideboard'";
+        $result = $con->query($query);
 
 
-while($row = $result->fetch(PDO::FETCH_ASSOC))
-  {
-  echo "" . $row['value'] . "";
-  }
+        while($row = $result->fetch(PDO::FETCH_ASSOC))
+        {
+            echo "" . $row['value'] . "";
+        }
 
-}
+    }
 
     elseif ($themearg == "preheader") {
 
 
-$query = "SELECT * FROM " . $dbprefix . "pages WHERE urlfolder='" . $viewpage . "'";
-$result = $con->query($query);
+        echo $pagedata[7];
 
-
-while($row = $result->fetch(PDO::FETCH_ASSOC))
-  {
-  eval ("" . $row['preheader'] . "");
-  }
-
-}
+    }
 
     elseif ($themearg == "extraheader") {
 
 
-$query = "SELECT * FROM " . $dbprefix . "pages WHERE urlfolder='" . $viewpage . "'";
-$result = $con->query($query);
+        echo $pagedata[5];
 
-
-while($row = $result->fetch(PDO::FETCH_ASSOC))
-  {
-  echo "" . $row['extraheader'] . "";
-  }
-
-}
+    }
 
     elseif ($themearg == "extrabodyoption") {
 
 
-$query = "SELECT * FROM " . $dbprefix . "pages WHERE urlfolder='" . $viewpage . "'";
-$result = $con->query($query);
+        echo $pagedata[6];
 
-
-while($row = $result->fetch(PDO::FETCH_ASSOC))
-  {
-  echo " " . $row['extrabodyoption'] . ""; #Make note of the extra space
-  }
-
-}
+    }
 
     else {
 
-echo "Unknown element \"" . $themearg . "\"";
+        echo "Unknown element \"" . $themearg . "\"";
 
-}
+    }
 
 }
 
