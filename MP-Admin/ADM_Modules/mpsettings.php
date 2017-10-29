@@ -167,7 +167,7 @@ $pages = $con->query($query);
 <td>
 <select name="theme">
 <?php
-$dirs = glob($pathfolder . "" . $themes . "/*", GLOB_ONLYDIR);
+$dirs = glob($pathfolder . "/" . $themes . "/*", GLOB_ONLYDIR);
 foreach($dirs as $dir)
 {
 $themeitem = basename($dir);

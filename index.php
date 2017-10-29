@@ -21,7 +21,9 @@ $expectedconf = 'config.php';
 if (file_exists($expectedconf)) {
     $config = $expectedconf;
 } else {
-    header( 'Location: /MP-Admin/firstrun.php' ) ;
+    include('MP-Admin/firstrun.php');
+    // header( 'Location: /MP-Admin/firstrun.php' ) ;
+    die;
 }
 
 /** Load MagicPage Config File */
@@ -43,6 +45,16 @@ include($common . "/mpfunctions.php");
 /** Load common theme functions */
 
 include($common . "/themefunctions.php");
+
+/** Check if a user exists **/
+$query = "SELECT ID FROM " . $dbprefix . "users";
+$result = $con->query($query);
+$count = $result->rowCount();
+if ($count < 1) {
+    include('MP-Admin/firstuser.php');
+    // header( 'Location: /MP-Admin/firstuser.php' ) ;
+    die;
+}
 
 /** Check auth cookie if cookie exists and not authenticated */
 

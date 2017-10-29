@@ -1,6 +1,6 @@
 <?php
 
-$expectedconf = '../config.php';
+// $expectedconf = '../config.php';
 
 session_start();
 
